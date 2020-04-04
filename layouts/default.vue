@@ -1,11 +1,12 @@
 <template>
-  <v-app dark>
+  <v-app>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
       app
+      color="primary"
     >
       <v-list>
         <v-list-item
@@ -38,7 +39,7 @@
       </v-btn>
       <v-btn
         icon
-        @click.stop="clipped = !clipped"
+        @click.stop="true"
       >
         <v-icon>mdi-application</v-icon>
       </v-btn>
@@ -50,35 +51,12 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer
       :fixed="fixed"
       app
@@ -92,7 +70,7 @@
 export default {
   data () {
     return {
-      clipped: false,
+      clipped: true,
       drawer: false,
       fixed: false,
       items: [
@@ -110,7 +88,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Tscreen'
     }
   }
 }
