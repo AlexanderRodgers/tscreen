@@ -29,6 +29,7 @@
       :clipped-left="clipped"
       fixed
       app
+      color="primary"
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
@@ -37,12 +38,12 @@
       >
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         icon
         @click.stop="true"
       >
         <v-icon>mdi-application</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-btn
         icon
         @click.stop="fixed = !fixed"

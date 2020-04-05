@@ -1,17 +1,19 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
-    >
-      
-    </v-flex>
-  </v-layout>
+  <v-container>
+    <v-row>
+      <v-col xs12 md6>
+        <h1 id="title">Screen Tenants, Find Roomates</h1>
+        <p>All within seconds</p>
+      </v-col>
+      <v-col xs7 md4>
+        <v-img :src="houseSearch" alt="house_search" id="house-search"></v-img>
+      </v-col>
+    </v-row>
+    <v-btn>
+      <nuxt-link to="/sign-up">Create an Account</nuxt-link>
+    </v-btn>
+    <v-btn>Sign In</v-btn>
+  </v-container>
 </template>
 
 <script>
@@ -22,6 +24,33 @@ export default {
   components: {
     Logo,
     VuetifyLogo
+  },
+
+  data() {
+    return {
+      houseSearch: require('../assets/house_search.svg')
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.main {
+  #title {
+    font-size: 3rem;
+  }
+
+  #title-sub {
+    font-size: 1.2rem;
+    // Grayish
+    counter-reset: #6c757d;
+  }
+  
+  
+}
+#house-search {
+  width: 75%;
+  height: auto;
+  float: right;
+}
+</style>

@@ -4,7 +4,7 @@
         <v-col cols="3">
            <v-avatar size="150">
               <v-img
-               src="https://i.pravatar.cc/300"
+               src="https://i.pravatar.cc/150"
               ></v-img>
            </v-avatar>
         </v-col>
