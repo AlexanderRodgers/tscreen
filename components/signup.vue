@@ -1,57 +1,97 @@
 <template>
-  <v-stepper v-model="e1">
-    <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Create an Account</v-stepper-step>
-
-      <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 > 2" step="2">Add Your Files</v-stepper-step>
-    </v-stepper-header>
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-        <v-btn
-          color="primary"
-          @click="e1 = 2"
-        >
-          Continue
-        </v-btn>
-        <v-btn text>Cancel</v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="2">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 3"
-        >
-          Continue
-        </v-btn>
-        <v-btn text @click="e1 = 1">Back</v-btn>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
+   <v-form>
+      <v-card class="mx-auto sign-up-card" outlined>
+         <v-card-title>Sign Up</v-card-title>
+         <v-card-subtitle>Use this Form to create an Account</v-card-subtitle>
+         <v-divider></v-divider>
+         <v-container fluid>
+            <v-row>
+               <v-col xs12 md6>
+                  <v-text-field 
+                     label="First Name"
+                     filled
+                     required
+                  ></v-text-field>
+               </v-col>
+               <v-col xs12 md6>
+                  <v-text-field 
+                     label="Last Name"
+                     filled
+                     required
+                  ></v-text-field>
+               </v-col>
+            </v-row>
+            <v-row>
+               <v-col xs12>
+                  <v-text-field 
+                     label="Email"
+                     filled 
+                     :rules="emailRules"
+                  ></v-text-field>
+               </v-col>
+            </v-row>
+            <v-row>
+               <v-col xs12>
+                  <v-text-field
+                     v-model="pass"
+                     label="Password"
+                     filled
+                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                     :type="show ? 'text' : 'password'"
+                     @click:append="show = !show"
+                     required
+                  ></v-text-field>
+               </v-col>
+            </v-row>
+            <v-row>
+               <v-col xs12>
+                  <v-text-field
+                     v-model="pass2"
+                     label="Confirm Password"
+                     :rules="[passwordsMatch]"
+                     filled
+                     type="password"
+                     error
+                     required
+                     ></v-text-field>
+                  <p>Already have an account? Sign in here.</p>
+               </v-col>
+            </v-row>
+            <v-row>
+               <v-col>
+                  <v-checkbox v-model="checked" label="I agree to the terms and conditions"></v-checkbox>
+               </v-col>
+            </v-row>
+         </v-container>
+      </v-card>
+   </v-form>
 </template>
 
 <script>
 export default {
    data() {
       return {
-         e1: 1
+         show: false,
+         checked: false,
+         emailRules: [
+            v => !!v || 'Email is required',
+            v => /.+@.+/.test(v) || 'E-mail must be valid',
+         ]
+      }
+   },
+   computed: {
+      passwordsMatch() {
+         return () => {
+            if (!this.pass2) return;
+            return this.pass === this.pass2 || 'Passwords must match'
+         }
       }
    }
 }
 </script>
 
 <style>
-
+.sign-up-card {
+   margin-bottom: 10px;
+}
 </style>

@@ -1,14 +1,14 @@
 <template>
   <div>
-     <signup></signup>
+     <registration/>
   </div>
 </template>
 
 <script>
-import signup from '~/components/signup';
+import registration from '~/components/registration';
 export default {
    components: {
-      signup
+      registration
    }
 }
 </script>
