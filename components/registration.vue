@@ -7,10 +7,10 @@
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
-        <signup/>
+        <signup ref="form"/>
         <v-btn
           color="primary"
-          @click="e1 = 2"
+          @click="validate"
         >
           Continue
         </v-btn>
@@ -40,10 +40,15 @@ export default {
   components: {
     signup,
   },
-
    data() {
       return {
          e1: 1
+      }
+   },
+   methods: {
+      validate() {
+        // grabs reference to signup component and then triggers, the childs validate() method.
+        this.$refs.form.validate();
       }
    }
 }
