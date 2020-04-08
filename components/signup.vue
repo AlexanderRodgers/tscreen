@@ -6,17 +6,17 @@
          <v-divider></v-divider>
          <v-container fluid>
             <v-row>
-               <v-col xs12 md6>
+               <v-col cols="12" md="6">
                   <v-text-field
-                     v-model="first"
+                     v-model="user.first"
                      label="Legal First Name"
                      filled
                      required
                   ></v-text-field>
                </v-col>
-               <v-col xs12 md6>
+               <v-col cols="12" md="6">
                   <v-text-field
-                     v-model="last"
+                     v-model="user.last"
                      label="Legal Last Name"
                      filled
                      required
@@ -24,9 +24,9 @@
                </v-col>
             </v-row>
             <v-row>
-               <v-col xs12>
+               <v-col cols="12">
                   <v-text-field 
-                     v-model="email"
+                     v-model="user.email"
                      label="Email"
                      filled 
                      :rules="emailRules"
@@ -35,9 +35,9 @@
                </v-col>
             </v-row>
             <v-row>
-               <v-col xs12>
+               <v-col cols="12">
                   <v-text-field
-                     v-model="pass"
+                     v-model="user.pass"
                      label="Password"
                      filled
                      :rules="[v => !!v && v.length > 8 || 'Password must be more than 8 characters']"
@@ -49,7 +49,7 @@
                </v-col>
             </v-row>
             <v-row>
-               <v-col xs12>
+               <v-col cols="12">
                   <v-text-field
                      v-model="pass2"
                      label="Confirm Password"
@@ -65,7 +65,7 @@
             <v-row>
                <v-col>
                   <v-checkbox 
-                     v-model="checked"
+                     v-model="user.checked"
                      :rules="[v => !!v || 'You must agree to continue!']"
                      required
                      label="I agree to the terms and conditions"
@@ -81,13 +81,15 @@
 export default {
    data() {
       return {
-         first: '',
-         last: '',
-         email: '',
-         pass: '',
+         user: {
+            first: '',
+            last: '',
+            email: '',
+            pass: '',
+            checked: false
+         },
          pass2: '',
          show: false,
-         checked: false,
          valid: true,
          emailRules: [
             v => !!v || 'Email is required',
@@ -97,20 +99,13 @@ export default {
    },
    computed: {
       passwordsMatch() {
-         return () => this.pass === this.pass2 || 'Passwords must match.'
+         return () => this.user.pass === this.pass2 || 'Passwords must match.'
       }
    },
    methods: {
       submit() {
          if (this.$refs.form.validate()) {
-            let user = {
-               first: this.first,
-               last: this.last,
-               email: this.email,
-               pass: this.pass,
-               checked: this.checked
-            }
-            this.$emit('to-user', user);
+            this.$emit('to-user', this.user);
          }
       }
 

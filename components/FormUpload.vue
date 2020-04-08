@@ -1,52 +1,65 @@
 <template>
-  <v-form ref="file-form" lazy-validation>
-     <v-card class="mx-auto form-card" outlined>
+  <v-form ref="fileForm" lazy-validation>
+     <v-card class="mx-auto form-card" id="form-card" outlined>
         <v-card-title>Contact Info</v-card-title>
         <v-card-subtitle>Just a little about you</v-card-subtitle>
         <v-divider></v-divider>
         <v-container fluid>
-           <v-row xs12>
-               <v-text-field
-               label="Current Street Address"
-               filled
-               required
-               ></v-text-field>
-           </v-row>
-           <v-row xs12>
-               <v-text-field
-               label="Street Address Line 2"
-               filled
-               required
-               ></v-text-field>
+           <v-row>
+              <v-col cols="12">
+                  <v-text-field
+                  label="Current Street Address"
+                  v-model="formDetails.address"
+                  filled
+                  :rules="[v => !!v || 'Address is required']"
+                  required
+                  ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                  <v-text-field
+                  label="Street Address Line 2"
+                  v-model="formDetails.address2"
+                  filled
+                  ></v-text-field>
+              </v-col>
            </v-row>
            <v-row>
-              <v-col xs12 md6>
+              <v-col cols="12" md="6">
                  <v-text-field
                   label="City"
+                  v-model="formDetails.city"
                   filled
+                  :rules="[v => !!v || 'City is required' ]"
                   required
-                 >
-                 </v-text-field>
+                 ></v-text-field>
               </v-col>
-              <v-col xs12 md6>
+              <v-col cols="12" md="6">
                  <v-select
+                  v-model="formDetails.state"
                   :items="states"
                   label="State"
+                  :rules="[v => !!v || 'State is required']"
                   filled
                  ></v-select>
               </v-col>
            </v-row>
            <v-row>
-              <v-col xs12 md6>
+              <v-col cols="12" md="6">
                  <v-text-field
-                  label="ZIP/Post Code"
+                  v-model="formDetails.zip"
+                  label="Post/ZIP Code"
                   filled
+                  :rules="zipRules"
                   required
                  ></v-text-field>
               </v-col>
-              <v-col xs12 md6>
+              <v-col cols="12" md="6">
                  <v-text-field
-                  mask
+                  v-model="phoneMasked"
+                  label="Phone Number"
+                  filled
+                  :rules="phoneRules"
+                  v-mask="{mask: '(###) ###-####', unmaskedVar: 'formDetails.phone'}"
                  ></v-text-field>
               </v-col>
            </v-row>
@@ -56,9 +69,30 @@
 </template>
 
 <script>
+import { mask } from '@titou10/v-mask'
 export default {
+   directives: {
+      mask
+   },
    data() {
       return {
+         formDetails: {
+            address: '',
+            address2: '',
+            city: '',
+            state: '',
+            zip: '',
+            phone: ''
+         },
+         zipRules: [
+            v => !!v || 'Zip Code is required',
+            v => v.length > 4 || 'Invalid ZIP Code'
+         ],
+         phoneRules: [
+            v => !!v || 'Phone Number is required',
+            v => v.length > 13 || 'Please enter your full phone number'
+         ],
+         phoneMasked: '',
          states: [
             'Alabama','Alaska','American Samoa','Arizona','Arkansas','California',
             'Colorado','Connecticut','Delaware','District of Columbia',
@@ -74,10 +108,19 @@ export default {
          ]
 
       }
+   },
+   methods: {
+      submit() {
+         if (this.$refs.fileForm.validate()) {
+            this.$emit('forms', this.formDetails);
+         }
+      }
    }
 }
 </script>
 
 <style>
-
+#form-card {
+   margin-bottom: 10px;
+}
 </style>
