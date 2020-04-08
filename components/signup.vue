@@ -9,7 +9,7 @@
                <v-col xs12 md6>
                   <v-text-field
                      v-model="first"
-                     label="First Name"
+                     label="Legal First Name"
                      filled
                      required
                   ></v-text-field>
@@ -17,7 +17,7 @@
                <v-col xs12 md6>
                   <v-text-field
                      v-model="last"
-                     label="Last Name"
+                     label="Legal Last Name"
                      filled
                      required
                   ></v-text-field>
@@ -26,6 +26,7 @@
             <v-row>
                <v-col xs12>
                   <v-text-field 
+                     v-model="email"
                      label="Email"
                      filled 
                      :rules="emailRules"
@@ -100,12 +101,16 @@ export default {
       }
    },
    methods: {
-      validate() {
-         this.$refs.form.validate();
-      },
       submit() {
-         if (this.validate()) {
-            
+         if (this.$refs.form.validate()) {
+            let user = {
+               first: this.first,
+               last: this.last,
+               email: this.email,
+               pass: this.pass,
+               checked: this.checked
+            }
+            this.$emit('to-user', user);
          }
       }
 

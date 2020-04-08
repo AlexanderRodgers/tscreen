@@ -1,13 +1,13 @@
 <template>
   <v-stepper v-model="e1">
     <v-stepper-header>
-      <v-stepper-step :complete="e1 > 1" step="1">Create an Account</v-stepper-step>
+      <v-stepper-step :complete="e1 > 1" step="1">Create an account</v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step :complete="e1 > 2" step="2">Add Your Files</v-stepper-step>
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
-        <signup ref="form"/>
+        <signup ref="form" @to-user="nextStep($event)"/>
         <v-btn
           color="primary"
           @click="validate"
@@ -17,11 +17,7 @@
         <v-btn text>Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
+        <FormUpload></FormUpload>
         <v-btn
           color="primary"
           @click="e1 = 3"
@@ -36,19 +32,29 @@
 
 <script>
 import signup from '~/components/signup'
+import FormUpload from '~/components/FormUpload'
+import { db } from '~/plugins/firebase'
+
 export default {
   components: {
     signup,
+    FormUpload
   },
    data() {
       return {
-         e1: 1
+         e1: 1,
+         user: {}
       }
    },
    methods: {
       validate() {
-        // grabs reference to signup component and then triggers, the childs validate() method.
-        this.$refs.form.validate();
+        this.e1++;
+        // grabs reference to signup component and then triggers, the childs submit() method.
+        // this.$refs.form.submit();
+      },
+      nextStep(event) {
+        this.user = event;
+        this.e1 = 2;
       }
    }
 }
