@@ -52,6 +52,12 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <v-btn>
+        <nuxt-link to="/login">
+          Login
+        </nuxt-link>
+      </v-btn>
+      <v-btn>Sign Up</v-btn>
     </v-app-bar>
     <v-content>
       <v-container>

@@ -65,6 +65,7 @@ export default {
         auth.createUserWithEmailAndPassword(userInfo.email, userInfo.pass)
           .then(user => {
             user.updateProfile(userInfo)
+              // TODO: Do something with this.
               .then(res => console.log(res))
               .catch(e => console.log(e));
           })
