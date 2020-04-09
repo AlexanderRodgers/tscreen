@@ -18,5 +18,10 @@ if (!firebase.apps.length) {
 
 const db = firebase.firestore();
 const auth = firebase.auth();
+
+auth.onAuthStateChanged(user => {
+   vm.$store.dispatch('fetchUser', user);
+});
+
 export {db, auth}
 export default firebase;

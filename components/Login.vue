@@ -77,7 +77,6 @@ export default {
                      break;  
                }
             });
-         console.log('hello');
       }
    }
 }

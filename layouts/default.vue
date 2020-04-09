@@ -52,12 +52,19 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn>
-        <nuxt-link to="/login">
-          Login
-        </nuxt-link>
-      </v-btn>
-      <v-btn>Sign Up</v-btn>
+      <div v-if="user">
+        <v-avatar color="indigo" size="32">
+          <span class="white--text headline">32</span>
+        </v-avatar>
+      </div>
+      <div v-else>
+        <v-btn>
+          <nuxt-link to="/login">
+            {{user}}
+          </nuxt-link>
+        </v-btn>
+        <v-btn>Sign Up</v-btn>
+      </div>
     </v-app-bar>
     <v-content>
       <v-container>
@@ -74,6 +81,8 @@
 </template>
 
 <script>
+import { auth } from '~/plugins/firebase';
+import { mapGetters } from 'vuex';
 export default {
   data () {
     return {
@@ -97,6 +106,12 @@ export default {
       rightDrawer: false,
       title: 'Tscreen'
     }
+  },
+  computed: {
+    ...mapGetters({
+      // Map 'this.user' to 'this.$store.getters.user'
+      user: 'user'
+    })
   }
 }
 </script>
