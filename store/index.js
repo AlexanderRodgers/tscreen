@@ -1,35 +1,11 @@
-export const state = () => ({
-  user: {
-    loggedIn: false,
-    data: null
-  }
-});
-
-export const getters = {
-  user (state) {
-    return state.user
-  }
-}
-
-export const mutations = {
-  SET_LOGGED_IN(state, value) {
-    state.user.loggedIn = value;
-  },
-  SET_USER(state, data) {
-    state.user.data = data;
-  }
-}
+import {getUserFromCookie, getUserFromSession} from '@/helpers'
 
 export const actions = {
-  fetchUser({ commit }, user) {
-    commit("SET_LOGGED_IN", user !== null);
+
+  async nuxtServerInit ({ dispatch }, { req }) {
+    const user = getUserFromCookie(req)
     if (user) {
-      commit("SET_USER", {
-        displayName: user.displayName,
-        email: user.email
-      });
-    } else {
-      commit("SET_USER", null);
+      await dispatch('modules/user/setUSER', { name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
     }
   }
 }

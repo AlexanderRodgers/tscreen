@@ -52,7 +52,8 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <div v-if="user">
+      <div v-if="true">
+        <v-btn @click="signOut">Sign out</v-btn>
         <v-avatar color="indigo" size="32">
           <span class="white--text headline">32</span>
         </v-avatar>
@@ -107,11 +108,18 @@ export default {
       title: 'Tscreen'
     }
   },
-  computed: {
-    ...mapGetters({
-      // Map 'this.user' to 'this.$store.getters.user'
-      user: 'user'
-    })
+  // computed: {
+  //   ...mapGetters({
+  //     // Map 'this.user' to 'this.$store.getters.user'
+  //     user: 'user'
+  //   })
+  // },
+  methods: {
+    signOut() {
+      auth.signOut()
+        .then(res => console.log(res))
+        .catch(e => console.error(e))
+    }
   }
 }
 </script>

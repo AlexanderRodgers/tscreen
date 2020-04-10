@@ -37,6 +37,8 @@
 
 <script>
 import { auth } from '~/plugins/firebase';
+import { mapActions } from 'vuex';
+
 export default {
    data() {
       return {
@@ -53,10 +55,12 @@ export default {
       }
    },
    methods: {
+      ...mapActions('user', ['login']),
       submit() {
          auth.signInWithEmailAndPassword(this.email, this.pass)
-            .then(res => {
-               console.log(res);
+            .then(user => {
+               console.log(user);
+               this.login(user);
                this.$router.push('/');
             })
             .catch(e => {
@@ -78,15 +82,6 @@ export default {
                }
             });
       }
-   },
-   mounted() {
-      console.log(this.$store);
-      let vm = this;
-      auth.onAuthStateChanged(user => {
-         if (user) {
-            vm.$store.dispatch('fetchUser', user);
-         }
-      });
    }
 }
 </script>

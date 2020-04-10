@@ -4,6 +4,7 @@
       <v-col xs12 md6>
         <h1 id="title">Screen Tenants, Find Roomates</h1>
         <p>All within seconds</p>
+        <p>{{uid}}</p>
       </v-col>
       <v-col xs7 md4>
         <v-img :src="houseSearch" alt="house_search" id="house-search"></v-img>
@@ -20,6 +21,7 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import { db, auth } from '~/plugins/firebase';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -27,14 +29,17 @@ export default {
     VuetifyLogo
   },
 
+  computed: {
+    ...mapGetters('user', [
+      'uid'
+    ])
+  },
+
   data() {
     return {
       user: {},
       houseSearch: require('../assets/house_search.svg')
     }
-  },
-  mounted() {
-    console.log(this.$store);
   }
 }
 </script>
