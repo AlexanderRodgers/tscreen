@@ -4,11 +4,13 @@ export const state = () => ({
     data: null
   }
 });
+
 export const getters = {
-  user(state){
+  user (state) {
     return state.user
   }
 }
+
 export const mutations = {
   SET_LOGGED_IN(state, value) {
     state.user.loggedIn = value;
@@ -17,6 +19,7 @@ export const mutations = {
     state.user.data = data;
   }
 }
+
 export const actions = {
   fetchUser({ commit }, user) {
     commit("SET_LOGGED_IN", user !== null);

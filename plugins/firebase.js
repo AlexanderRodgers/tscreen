@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { mapState } from 'vuex';
 
 if (!firebase.apps.length) {
    let firebaseConfig = {
@@ -19,9 +20,5 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-auth.onAuthStateChanged(user => {
-   vm.$store.dispatch('fetchUser', user);
-});
-
-export {db, auth}
+export { db, auth }
 export default firebase;

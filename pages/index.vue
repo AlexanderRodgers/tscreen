@@ -19,7 +19,7 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
-import { db } from '~/plugins/firebase';
+import { db, auth } from '~/plugins/firebase';
 
 export default {
   components: {
@@ -29,8 +29,12 @@ export default {
 
   data() {
     return {
+      user: {},
       houseSearch: require('../assets/house_search.svg')
     }
+  },
+  mounted() {
+    console.log(this.$store);
   }
 }
 </script>

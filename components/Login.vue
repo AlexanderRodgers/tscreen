@@ -78,6 +78,15 @@ export default {
                }
             });
       }
+   },
+   mounted() {
+      console.log(this.$store);
+      let vm = this;
+      auth.onAuthStateChanged(user => {
+         if (user) {
+            vm.$store.dispatch('fetchUser', user);
+         }
+      });
    }
 }
 </script>
