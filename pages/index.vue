@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col xs12 md6>
+    <v-row class="main">
+      <v-col cols="12" sm="7" md="6">
         <h1 id="title">Screen Tenants, Find Roomates</h1>
         <p>All within seconds</p>
         <p>{{uid}}</p>
       </v-col>
-      <v-col xs7 md4>
+      <v-col sm="7" md="6" style="height:300px">
         <v-img :src="houseSearch" alt="house_search" id="house-search"></v-img>
       </v-col>
     </v-row>
@@ -48,6 +48,8 @@ export default {
 .main {
   #title {
     font-size: 3rem;
+    line-height: 1.2;
+    letter-spacing: .1rem;
   }
 
   #title-sub {
@@ -59,7 +61,7 @@ export default {
   
 }
 #house-search {
-  width: 75%;
+  width: 100%;
   height: auto;
   float: right;
 }

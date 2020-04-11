@@ -58,9 +58,9 @@ export default {
       ...mapActions('user', ['login']),
       submit() {
          auth.signInWithEmailAndPassword(this.email, this.pass)
-            .then(user => {
+            .then(res => {
                console.log(user);
-               this.login(user);
+               this.login(res.user);
                this.$router.push('/');
             })
             .catch(e => {
@@ -71,7 +71,7 @@ export default {
                      this.errorText = 'Password is incorrect';
                      break;
                   case 'auth/user-not-found':
-                     this.errorText = 'User does not exist';
+                     this.errorText = `We can't find a user with that email.`;
                      break;
                   case 'auth/invalid-email':
                      this.errorText = 'Invalid email';

@@ -34,6 +34,7 @@
 import signup from '~/components/signup'
 import FormUpload from '~/components/FormUpload'
 import { db, auth } from '~/plugins/firebase'
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -48,6 +49,7 @@ export default {
       }
    },
    methods: {
+      ...mapActions('user', ['login']),
       validateSignUp() {
         this.e1++;
         // grabs reference to signup component and then triggers, the childs submit() method.
@@ -63,10 +65,11 @@ export default {
       submitAll(event) {
         let userInfo = { ...this.user, ...event }
         auth.createUserWithEmailAndPassword(userInfo.email, userInfo.pass)
-          .then(user => {
-            user.updateProfile(userInfo)
+          .then(res => {
+            this.login(res.user);
+            db.collection('users').doc(res.user.uid).set({ ...userInfo, pass: null })
               // TODO: Do something with this.
-              .then(res => console.log(res))
+              .then(res => console.log('User successfully created', res))
               .catch(e => console.log(e));
           })
           .catch(e => {

@@ -52,8 +52,8 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <div v-if="true">
-        <v-btn @click="signOut">Sign out</v-btn>
+      <div v-if="loggedIn">
+        <v-btn @click="logout">Sign out</v-btn>
         <v-avatar color="indigo" size="32">
           <span class="white--text headline">32</span>
         </v-avatar>
@@ -61,10 +61,14 @@
       <div v-else>
         <v-btn>
           <nuxt-link to="/login">
-            {{user}}
+            Login
           </nuxt-link>
         </v-btn>
-        <v-btn>Sign Up</v-btn>
+        <v-btn>
+          <nuxt-link to="/sign-up">
+            Sign Up
+          </nuxt-link>
+        </v-btn>
       </div>
     </v-app-bar>
     <v-content>
@@ -83,7 +87,7 @@
 
 <script>
 import { auth } from '~/plugins/firebase';
-import { mapGetters } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 export default {
   data () {
     return {
@@ -108,18 +112,11 @@ export default {
       title: 'Tscreen'
     }
   },
-  // computed: {
-  //   ...mapGetters({
-  //     // Map 'this.user' to 'this.$store.getters.user'
-  //     user: 'user'
-  //   })
-  // },
+  computed: {
+    ...mapState('user', ['loggedIn'])
+  },
   methods: {
-    signOut() {
-      auth.signOut()
-        .then(res => console.log(res))
-        .catch(e => console.error(e))
-    }
+    ...mapActions('user', ['logout'])
   }
 }
 </script>
