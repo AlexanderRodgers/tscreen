@@ -63,13 +63,21 @@ export default {
         this.e1 = 2;
       },
       submitAll(event) {
-        let userInfo = { ...this.user, ...event }
-        auth.createUserWithEmailAndPassword(userInfo.email, userInfo.pass)
+        let newUser = {}
+        // create a new user object without password.
+        let { pass, ...rest } = this.user;
+        console.log(rest);
+        let userInfo = { ...rest, ...event }
+        console.log(userInfo.email, pass);
+        auth.createUserWithEmailAndPassword(userInfo.email, pass)
           .then(res => {
-            this.login(res.user);
+            newUser = res.user;
             db.collection('users').doc(res.user.uid).set({ ...userInfo, pass: null })
               // TODO: Do something with this.
-              .then(res => console.log('User successfully created', res))
+              .then(res => {
+                console.log('User successfully created', res);
+                this.login(newUser);
+              })
               .catch(e => console.log(e));
           })
           .catch(e => {

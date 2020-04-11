@@ -9,7 +9,7 @@
            </v-avatar>
         </v-col>
         <v-col>
-           <h2></h2>
+           <h2>{{user.first}} {{user.last}}</h2>
         </v-col>
      </v-row>
   </v-container>
@@ -19,17 +19,24 @@
 import { db } from '~/plugins/firebase';
 import { mapGetters } from 'vuex';
 export default {
+   data() {
+      return {
+         user: {}
+      }
+   },
    computed: {
       ...mapGetters('user', [ 'uid' ])
    },
    mounted() {
-      console.log(this.uid);
-      // I should probably save uid in state
-      db.collection('users').doc(this.uid).get()
-         .then(res => {
-            console.log(res);
-         })
-         .catch(e => console.error(e))
+      // TODO: Make it so only authed users can access this page
+      if (this.uid) {
+         db.collection('users').doc(this.uid).get()
+            .then(doc => {
+               console.log(doc.data());
+               this.user = doc.data();
+            })
+            .catch(e => console.error(e))
+      }
    }
 }
 </script>

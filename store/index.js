@@ -6,6 +6,7 @@ export const actions = {
     const user = getUserFromCookie(req)
     if (user) {
       await dispatch('user/setUSER', { name: user.name, email: user.email, avatar: user.picture, uid: user.user_id})
+      await dispatch('user/setLoggedIn', true)
     }
   }
 }

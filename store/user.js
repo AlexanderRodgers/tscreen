@@ -1,6 +1,4 @@
-import firebase from '~/plugins/firebase';
-
-import Cookies from 'cookie-universal-nuxt';
+import firebase, { db } from '~/plugins/firebase';
 
 export const state = () => ({
    uid: null,
@@ -10,14 +8,14 @@ export const state = () => ({
 
 export const getters = {
    uid (state) {
-      if (state.user && state.user.uid) return state.user.uid
-      else return null
+      if (state.user && state.user.uid) return state.user.uid;
+      else return null;
    },
    user (state) {
-      return state.user
+      return state.user;
    },
-   isAuthenticated (state) {
-      return !!state.user && !!state.user.uid
+   isLoggedIn (state) {
+      return state.loggedIn;
    }
 }
 
@@ -25,22 +23,20 @@ export const actions = {
 
   async login({dispatch, state}, user) {
     console.log('[STORE ACTIONS] - login');
-    const token = await firebase.auth().currentUser.getIdToken(true)
-    console.log(user);
-    const userInfo = {
-      name: user.displayName,
-      email: user.email,
-      avatar: user.photoURL,
-      uid: user.uid
-    }
-    console.log(userInfo);
-
-    this.$cookies.set('access_token', token); // saving token in cookie for server rendering
-    await dispatch('setUSER', userInfo);
-    await dispatch('saveUID', userInfo.uid);
-    await dispatch('setLoggedIn', true);
-    console.log('[STORE ACTIONS] - in login, response:', status);
-
+    const token = await firebase.auth().currentUser.getIdToken(true);
+    const uid = firebase.auth().currentUser.uid;
+    let { displayName, photoUrl, emailVerified } = user;
+    db.collection('users').doc(uid).get()
+      .then(doc => {
+        let userInfo = doc.data();
+        (async () => {
+          await(dispatch('setUSER', { ...userInfo, displayName, photoUrl, emailVerified }));
+          await dispatch('saveUID', userInfo.uid);
+          await dispatch('setLoggedIn', true);    
+          this.$cookies.set('access_token', token); // saving token in cookie for server rendering
+        })();
+      })
+      .catch(e => console.log('[STORE ERROR]: UNABLE TO GET USER DATA'))
   },
 
   async logout({commit, dispatch}) {
@@ -50,6 +46,7 @@ export const actions = {
     this.$cookies.remove('access_token');
     commit('setUSER', null);
     commit('saveUID', null);
+    commit('setLoggedIn', false);
   },
 
   saveUID({commit}, uid) {

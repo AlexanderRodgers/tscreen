@@ -4,7 +4,6 @@
       <v-col cols="12" sm="7" md="6">
         <h1 id="title">Screen Tenants, Find Roomates</h1>
         <p>All within seconds</p>
-        <p>{{uid}}</p>
       </v-col>
       <v-col sm="7" md="6" style="height:300px">
         <v-img :src="houseSearch" alt="house_search" id="house-search"></v-img>
