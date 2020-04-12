@@ -50,13 +50,19 @@
       >
         <v-icon>mdi-minus</v-icon>
       </v-btn>
-      <v-toolbar-title v-text="title" />
+        <v-btn>
+          <nuxt-link to="/" style="color:black">
+            Tscreen
+          </nuxt-link>
+        </v-btn>
       <v-spacer />
       <div v-if="loggedIn">
         <v-btn @click="logout">Sign out</v-btn>
-        <v-avatar color="indigo" size="32">
-          <span class="white--text headline">32</span>
-        </v-avatar>
+        <nuxt-link to="/profile">
+          <v-avatar color="indigo" size="32">
+            <span class="white--text headline">32</span>
+          </v-avatar>
+        </nuxt-link>
       </div>
       <div v-else>
         <v-btn>

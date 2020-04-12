@@ -1,4 +1,5 @@
 import firebase, { db } from '~/plugins/firebase';
+import jwtSimple from 'jwt-simple';
 
 export const state = () => ({
    uid: null,
@@ -23,16 +24,19 @@ export const actions = {
 
   async login({dispatch, state}, user) {
     console.log('[STORE ACTIONS] - login');
+    // this token is essentially a user object.
     const token = await firebase.auth().currentUser.getIdToken(true);
     const uid = firebase.auth().currentUser.uid;
-    let { displayName, photoUrl, emailVerified } = user;
     db.collection('users').doc(uid).get()
       .then(doc => {
         let userInfo = doc.data();
+        // TODO: Remove this in production, this is to limit calls to firebase.
+        let jwt = jwtSimple.encode(userInfo, process.env.JWT_SECRET);
+        this.$cookies.set('user', jwt);
         (async () => {
-          await(dispatch('setUSER', { ...userInfo, displayName, photoUrl, emailVerified }));
+          await(dispatch('setUSER', userInfo));
           await dispatch('saveUID', userInfo.uid);
-          await dispatch('setLoggedIn', true);    
+          await dispatch('setLoggedIn', true);
           this.$cookies.set('access_token', token); // saving token in cookie for server rendering
         })();
       })

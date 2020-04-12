@@ -72,7 +72,9 @@ export default {
         auth.createUserWithEmailAndPassword(userInfo.email, pass)
           .then(res => {
             newUser = res.user;
-            db.collection('users').doc(res.user.uid).set({ ...userInfo, pass: null })
+            console.log(newUser);
+            let { displayName, photoURL, emailVerified } = newUser
+            db.collection('users').doc(res.user.uid).set({ ...userInfo, displayName, photoURL, emailVerified })
               // TODO: Do something with this.
               .then(res => {
                 console.log('User successfully created', res);

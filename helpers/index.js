@@ -7,13 +7,15 @@ export function getUserFromCookie (req) {
 
   if (req.headers.cookie) {
     const parsed = cookieparser.parse(req.headers.cookie)
-    const accessTokenCookie = parsed.access_token
+    const accessTokenCookie = parsed.access_token;
+    const userCookie = parsed.user;
     if (!accessTokenCookie) return
 
-    const decodedToken = jwtDecode(accessTokenCookie)
+    const decodedToken = jwtDecode(accessTokenCookie);
+    const decodedUser = jwtDecode(userCookie);
     if (!decodedToken) return
 
-    return decodedToken
+    return [decodedToken, decodedUser]
   }
 }
 
