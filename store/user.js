@@ -48,6 +48,7 @@ export const actions = {
     await firebase.auth().signOut();
 
     this.$cookies.remove('access_token');
+    this.$cookies.remove('user');
     commit('setUSER', null);
     commit('saveUID', null);
     commit('setLoggedIn', false);
