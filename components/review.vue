@@ -5,26 +5,14 @@
               <v-avatar min-width="40" color="red" class="review-avatar">
                  <span class="white--text">JZ</span>
               </v-avatar>
-           <v-col cols="10">
+           <v-col>
               <div class="review-user primary--text">Josh Zolkewitz</div>
-              <p>{{lorem}}</p>
-           </v-col>
-           <v-col cols="1">
+              <span>&#183;</span>
               <p class="subheader--text review-details">15 min ago</p>
+              <p class="review-content">{{lorem}}</p>
            </v-col>
         </v-row>
      </v-container>
-     <!-- <v-list-item>
-        <v-list-item-avatar color="grey"></v-list-item-avatar>
-        <v-list-item-content>
-           <v-list-item-title class="primary--text">Josh Zolkewitz</v-list-item-title>
-           <p>{{lorem}}</p>
-          <v-list-item-subtitle>{{lorem}}</v-list-item-subtitle>
-        </v-list-item-content>
-        <v-list-item-action>
-           <v-list-item-action-text v-text="'15 min ago'"></v-list-item-action-text>
-        </v-list-item-action>
-     </v-list-item> -->
   </v-card>
 </template>
 
@@ -49,12 +37,20 @@ export default {
    .review-user {
       line-height: 1.2;
       font-size: 1rem;
+      display: inline-block;
    }
    .review-avatar {
       margin: 0 10px 0 0;
    }
    .review-details {
-      font-size: .8rem;
+      font-size: .85rem;
+      margin-bottom: 0px;
+      display: inline-block;
+   }
+   .review-content {
+      line-height: 1;
+      font-size: .9rem;
+      margin-bottom: 0px;
    }
 }
 </style>

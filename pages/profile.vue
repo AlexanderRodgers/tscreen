@@ -1,5 +1,5 @@
 <template>
-  <v-container class="main">
+  <v-container class="main" fluid>
      <v-row>
         <v-col cols="3">
            <v-avatar size="175">
@@ -27,8 +27,8 @@
            <v-tabs>
               <v-tab href="#tab-review">Reviews</v-tab>
               <v-tab>Timeline</v-tab>
-              <v-tab-item :value="'tab-review'">
-                 <Review></Review>
+              <v-tab-item :value="'tab-review'" v-for="i in 3" :key="i">
+                 <Review style="margin-top:10px"></Review>
               </v-tab-item>
            </v-tabs>
         </v-col>
