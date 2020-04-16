@@ -2,11 +2,11 @@
   <v-container class="main" fluid>
      <v-row>
         <v-col cols="3">
-           <v-avatar size="175">
-              <v-img
-               src="https://i.pravatar.cc/175"
-              ></v-img>
-           </v-avatar>
+            <v-avatar size="175">
+               <v-img
+                  src="https://i.pravatar.cc/175"
+               ></v-img>
+            </v-avatar>
         </v-col>
         <v-col cols="9">
            <h1 id="display-name">{{displayName()}}</h1>
@@ -25,6 +25,7 @@
         </v-col>
         <v-col cols="9">
            <v-tabs>
+              <v-tab href="#tab-about">About</v-tab>
               <v-tab href="#tab-review">Reviews</v-tab>
               <v-tab>Timeline</v-tab>
               <v-tab-item :value="'tab-review'" v-for="i in 3" :key="i">

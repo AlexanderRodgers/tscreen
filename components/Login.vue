@@ -60,7 +60,7 @@ export default {
          auth.signInWithEmailAndPassword(this.email, this.pass)
             .then(res => {
                this.login(res.user);
-               this.$router.push('/');
+               this.$router.push('/dashboard');
             })
             .catch(e => {
                let errorCode = e.code;

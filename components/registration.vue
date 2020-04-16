@@ -79,9 +79,7 @@ export default {
         let newUser = {}
         // create a new user object without password.
         let { pass, ...rest } = this.user;
-        console.log(rest);
         let userInfo = { ...rest, ...event }
-        console.log(userInfo.email, pass);
         auth.createUserWithEmailAndPassword(userInfo.email, pass)
           .then(res => {
             newUser = res.user;
@@ -92,6 +90,7 @@ export default {
               .then(res => {
                 console.log('User successfully created', res);
                 this.login(newUser);
+                this.$router.push('/dashboard')
               })
               .catch(e => console.log(e));
           })
