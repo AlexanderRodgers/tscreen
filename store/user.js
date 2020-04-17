@@ -71,15 +71,15 @@ export const actions = {
 
 export const mutations = {
   saveUID (state, uid) {
-    console.log('[STORE MUTATIONS] - saveUID:', uid);
+    // console.log('[STORE MUTATIONS] - saveUID:', uid);
     state.uid = uid;
   },
   setUSER (state, user) {
-    console.log('[STORE MUTATIONS] - setUSER:', user);
+    // console.log('[STORE MUTATIONS] - setUSER:', user);
     state.user = user;
   },
   setLoggedIn(state, loggedIn) {
-    console.log('[STORE MUTATIONS] - loggedIn:', loggedIn)
+    // console.log('[STORE MUTATIONS] - loggedIn:', loggedIn)
     state.loggedIn = loggedIn;
   }
 }

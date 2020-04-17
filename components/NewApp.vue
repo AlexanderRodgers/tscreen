@@ -5,7 +5,7 @@
      </div>
      <v-list-item>
       <v-list-item-content>
-        <v-list-item-title >Add a new Application</v-list-item-title>
+        <v-list-item-title >{{title}}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
   </v-card>
@@ -13,9 +13,12 @@
 
 <script>
 export default {
+   props: {
+      title: String
+   },
    methods: {
       createApp() {
-         console.log('clicked!');
+         this.$router.push('/application');
       }
    }
 }
