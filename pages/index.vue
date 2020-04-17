@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <v-row class="main">
-      <v-col cols="12" sm="7" md="6">
-        <h1 id="title">Screen Tenants, Find Roomates</h1>
-        <p>All within seconds</p>
+      <v-col class="main-column" cols="12" sm="7" md="6" >
+        <h1 id="title">Skip the Check, Skip the hassle</h1>
+        <p>And save your money all at the same time</p>
       </v-col>
-      <v-col sm="7" md="6" style="height:300px">
+      <v-col class="main-column" cols="12" sm="7" md="6" >
         <v-img :src="houseSearch" alt="house_search" id="house-search"></v-img>
       </v-col>
     </v-row>
@@ -56,8 +56,6 @@ export default {
     // Grayish
     counter-reset: #6c757d;
   }
-  
-  
 }
 #house-search {
   width: 100%;
