@@ -28,7 +28,7 @@
 
 <script>
 import Application from '~/components/Application'
-import Landlord from '~/components/Landlord'
+import Landlord from '~/components/Landlord/Landlord'
 import NewApp from '~/components/NewApp'
 import { mapGetters } from 'vuex';
 export default {

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import LandlordApp from '~/components/LandlordApp'
+import LandlordApp from '~/components/Landlord/LandlordApp'
 import NewApp from '~/components/NewApp'
 export default {
   components: {

@@ -7,9 +7,7 @@
      </v-stepper-header>
      <v-stepper-items>
         <v-stepper-content step="1">
-           <v-card>
-              Hello
-           </v-card>
+           <PropertyForm></PropertyForm>
            <v-btn @click="doNothing">
               Continue
            </v-btn>
@@ -25,7 +23,11 @@
 </template>
 
 <script>
+import PropertyForm from '~/components/PropertyForm'
 export default {
+   components: {
+      PropertyForm
+   },
    data() {
       return {
          e1: 1
