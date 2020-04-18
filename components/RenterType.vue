@@ -27,7 +27,6 @@ export default {
    },
    methods: {
       emitType(type) {
-         console.log(type);
          this.$emit('renter-type', type);
       }
    }
