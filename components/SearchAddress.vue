@@ -1,33 +1,23 @@
 <template>
   <v-autocomplete
-      :search-input.sync="search"
+      id="autocomplete"
+      v-model="model"
       :items="items"
+      :search-input.sync="search"
       label="Search for your Address"
       :loading="isLoading"
       item-value="id"
-      item-text="place_name"
-      hide-details
+      item-text="addy"
       :filter="x => x"
-      hide-selected
       return-object
+      filled
   >
    <template v-slot:no-data>
       <v-list-item>
          <v-list-item-title>
-            {{items}}
+            No Address Found
          </v-list-item-title>
       </v-list-item>
-   </template>
-   <template v-slot:selection="{ attr, on, item, selected }">
-      <v-chip
-         v-bind="attr"
-         :input-value="selected"
-         color="blue-grey"
-         class="white--text"
-         v-on="on"
-      >
-         <span v-text="item.place_name"></span>
-      </v-chip>
    </template>
    <template v-slot:item="{ item }">
       <v-list-item-content>
@@ -47,12 +37,16 @@ export default {
          items: [],
          isLoading: false,
          attr: null,
-         selected: null
+         selected: null,
+         address: [],
+         model: null,
       }
    },
    watch: {
+      model (val) {
+         this.$emit('address', val.place_name);
+      },
       search (val) {
-         console.log(val);
          this.isLoading = true;
          // Reduce the number of API calls by running the search every half second.
          let throttledSearch = _.throttle(async () => {
@@ -60,16 +54,21 @@ export default {
          }, 500);
          (async() => {
             let addressData = await throttledSearch();
-            console.log(addressData);
             this.isLoading = false;
             this.items = addressData.features;
-            console.log(this.items)
+            this.items.forEach(item => {
+               item.addy = item.place_name.split(',')[0];
+            });
          })();
       }
-   },
+   }
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+#autocomplete {
+   .v-input__append-inner {
+      visibility: hidden !important;
+   }
+}
 </style>
