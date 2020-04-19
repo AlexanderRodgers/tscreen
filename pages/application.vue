@@ -7,10 +7,14 @@
      </v-stepper-header>
      <v-stepper-items>
         <v-stepper-content step="1">
-           <PropertyForm></PropertyForm>
-           <v-btn @click="doNothing">
-              Continue
-           </v-btn>
+           <PropertyForm ref="property" @property="nextStep($event)"></PropertyForm>
+           <v-btn
+               color="primary"
+               @click="validateProperty"
+            >
+               Continue
+            </v-btn>
+            <v-btn text @click="e1--">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
            <v-card>
@@ -30,13 +34,21 @@ export default {
    },
    data() {
       return {
-         e1: 1
+         e1: 1,
+         property: {}
       }
    },
    middleware: 'authenticated',
    methods: {
       doNothing() {
          return;
+      },
+      validateProperty() {
+         this.$refs.property.submit();
+      },
+      nextStep(val) {
+         this.property = val;
+         this.e1++;
       }
    }
 }

@@ -1,36 +1,40 @@
 <template>
-  <v-autocomplete
-      id="autocomplete"
-      v-model="model"
-      :items="items"
-      :search-input.sync="search"
-      label="Search for your Address"
-      :loading="isLoading"
-      item-value="id"
-      item-text="addy"
-      :filter="x => x"
-      return-object
-      filled
-  >
-   <template v-slot:no-data>
-      <v-list-item>
-         <v-list-item-title>
-            No Address Found
-         </v-list-item-title>
-      </v-list-item>
-   </template>
-   <template v-slot:item="{ item }">
-      <v-list-item-content>
-         <v-list-item-title>{{item.place_name}}</v-list-item-title>
-      </v-list-item-content>
-   </template>
-  </v-autocomplete>
+   <v-autocomplete
+         v-model="model"
+         :items="items"
+         :search-input.sync="search"
+         label="Search for your Address"
+         :loading="isLoading"
+         item-value="id"
+         item-text="addy"
+         :filter="x => x"
+         append-icon=""
+         return-object
+         filled
+         :error-messages="errorMessage"
+   >
+      <template v-slot:no-data>
+         <v-list-item>
+            <v-list-item-title>
+               No Address Found
+            </v-list-item-title>
+         </v-list-item>
+      </template>
+      <template v-slot:item="{ item }">
+         <v-list-item-content>
+            <v-list-item-title>{{item.place_name}}</v-list-item-title>
+         </v-list-item-content>
+      </template>
+   </v-autocomplete>
 </template>
 
 <script>
 import { getAddress } from '~/api/map';
 import _ from 'lodash';
 export default {
+   props: {
+      errorMessage: String | Array
+   },
    data() {
       return {
          search: null,
@@ -66,9 +70,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#autocomplete {
-   .v-input__append-inner {
-      visibility: hidden !important;
-   }
-}
 </style>
