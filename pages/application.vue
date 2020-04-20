@@ -39,7 +39,8 @@
 <script>
 import PropertyForm from '~/components/PropertyForm'
 import PropertyDetails from '~/components/PropertyDetails'
-import { db, auth } from '~/plugins/firebase'
+import firebase, { db, auth } from '~/plugins/firebase'
+import { mapActions } from 'vuex';
 export default {
    components: {
       PropertyForm,
@@ -56,6 +57,7 @@ export default {
    },
    middleware: 'authenticated',
    methods: {
+      ...mapActions('user', ['login']),
       validateProperty() {
          this.$refs.property.submit();
       },
@@ -67,13 +69,25 @@ export default {
          this.e1++;
       },
       createApp(details) {
-         let form = { ...this.property, ...details }
+         let user = auth.currentUser.uid;
+         let form = { ...this.property, ...details, user }
+         // Add a date when the form was created.
+         form['created'] = firebase.firestore.FieldValue.serverTimestamp();
+         // Create a new application and then update the user.
          db.collection('apps').add(form)
             .then(res => {
-               db.collection('users').doc(auth.currentUser.uid).update({
-                  apps: [...apps, res.id]
+               db.collection('users').doc(user).update({
+                  'apps': firebase.firestore.FieldValue.arrayUnion(res.id)
                })
+               this.login();
+               this.$router.push('/dashboard');
                console.log('App successfully created.', res);
+            })
+            .catch(e => {
+               // TODO: DO something with this.
+               const errorCode = e.code;
+               const errorMessage = e.message;
+               alert(`${errorCode}: ${errorMessage}`);
             });
       }
    }

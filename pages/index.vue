@@ -18,14 +18,12 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 import { db, auth } from '~/plugins/firebase';
 import { mapGetters } from 'vuex';
 
 export default {
   components: {
     Logo,
-    VuetifyLogo
   },
 
   computed: {

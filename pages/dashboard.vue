@@ -1,6 +1,6 @@
 <template>
   <div>
-     <div v-if="user.type === 'renter'">
+     <div v-if="!override && user.type === 'renter'">
       <NewApp :title="'Add a new application'"></NewApp>
       <v-expansion-panels class="current-apps">
          <v-expansion-panel>
@@ -36,6 +36,11 @@ export default {
       Application,
       NewApp,
       Landlord
+   },
+   data() {
+      return {
+         override: true,
+      }
    },
    middleware: 'authenticated',
    computed: {
