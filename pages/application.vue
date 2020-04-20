@@ -7,7 +7,10 @@
      </v-stepper-header>
      <v-stepper-items>
         <v-stepper-content step="1">
-           <PropertyForm ref="property" @property="nextStep($event)"></PropertyForm>
+           <PropertyForm 
+               ref="property"
+               @property="nextStep($event)">
+            </PropertyForm>
            <v-btn
                color="primary"
                @click="validateProperty"
@@ -17,10 +20,17 @@
             <v-btn text @click="e1--">Cancel</v-btn>
         </v-stepper-content>
         <v-stepper-content step="2">
-           <v-card>
-              Hello2
-           </v-card>
-           <v-btn color="primary" @click="doNothing"></v-btn>
+           <PropertyDetails
+               ref="details"
+               @details="createApp($event)"
+           ></PropertyDetails>
+           <v-btn
+               color="primary"
+               @click="validateDetails"
+            >
+               Continue
+            </v-btn>
+            <v-btn text @click="e1--">Cancel</v-btn>
         </v-stepper-content>
      </v-stepper-items>
   </v-stepper>
@@ -28,9 +38,12 @@
 
 <script>
 import PropertyForm from '~/components/PropertyForm'
+import PropertyDetails from '~/components/PropertyDetails'
+import { db, auth } from '~/plugins/firebase'
 export default {
    components: {
-      PropertyForm
+      PropertyForm,
+      PropertyDetails
    },
    data() {
       return {
@@ -38,17 +51,30 @@ export default {
          property: {}
       }
    },
+   computed: {
+
+   },
    middleware: 'authenticated',
    methods: {
-      doNothing() {
-         return;
-      },
       validateProperty() {
          this.$refs.property.submit();
+      },
+      validateDetails() {
+         this.$refs.details.submit();
       },
       nextStep(val) {
          this.property = val;
          this.e1++;
+      },
+      createApp(details) {
+         let form = { ...this.property, ...details }
+         db.collection('apps').add(form)
+            .then(res => {
+               db.collection('users').doc(auth.currentUser.uid).update({
+                  apps: [...apps, res.id]
+               })
+               console.log('App successfully created.', res);
+            });
       }
    }
 }

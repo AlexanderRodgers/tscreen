@@ -80,7 +80,6 @@ export default {
             city: '',
             state: '',
             zip: '',
-            phone: ''
          },
          zipRules: [
             v => !!v || 'Zip Code is required',
@@ -95,6 +94,7 @@ export default {
          // Populates other text fields with address information.
          this.address = address;
          let splitAddress = address.split(',');
+         this.propertyDetails.address = splitAddress[0];
          this.propertyDetails.city = splitAddress[1];
          this.propertyDetails.state = splitAddress[2].split(' ')[1];
          this.propertyDetails.zip = splitAddress[2].split(' ')[2];
