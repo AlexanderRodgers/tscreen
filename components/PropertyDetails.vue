@@ -12,33 +12,33 @@
                      class="details-checkbox"
                      dense
                      hide-details
-                     v-model="details.options"
+                     v-model="options"
                      label="Background Check"
-                     value="Background Check">
+                     value="background">
                   </v-checkbox>
                   <v-checkbox
                      class="details-checkbox"
                      dense
                      hide-details
-                     v-model="details.options"
+                     v-model="options"
                      label="Credit Score"
-                     value="Credit Score">
+                     value="credit">
                   </v-checkbox>
                   <v-checkbox
                      class="details-checkbox"
                      dense
                      hide-details
-                     v-model="details.options"
+                     v-model="options"
                      label="Address History"
-                     value="Address History">
+                     value="address">
                   </v-checkbox>
                   <v-checkbox
                      class="details-checkbox"
                      dense
                      hide-details
-                     v-model="details.options"
+                     v-model="options"
                      label="Resume"
-                     value="Resume"
+                     value="resume"
                   >
                   </v-checkbox>
               </v-col>
@@ -66,15 +66,39 @@ export default {
    data() {
       return {
          valid: false,
+         options: [],
          details: {
-            options: [],
             limit: 0,
+            options: {
+               background: false,
+               resume: false,
+               address: false,
+               credit: false
+            }
          }
       }
    },
    methods: {
       submit() {
          if (this.$refs.form.validate()) {
+            for (let option of this.options) {
+               switch(option) {
+                  case 'resume':
+                     this.details.options.resume = true;
+                     break;
+                  case 'background':
+                     this.details.options.background = true;
+                     break;
+                  case 'address':
+                     this.details.options.address = true;
+                     break;
+                  case 'credit':
+                     this.details.options.credit = true;
+                     break;
+                  default:
+                     break;
+               }
+            }
             this.$emit('details', this.details);
          }
       }

@@ -30,16 +30,18 @@ export default {
   computed: {
     ...mapGetters('user', [ 'user' ])
   },
-
+  
   mounted() {
     if (this.user.apps.length !== 0) {
       let apps = this.user.apps;
-      apps.forEach(app => {
-        console.log('running!');
-        db.collection('apps').doc(app).get().then(appData => {
-          this.appData.push({app, ...appData});
-        });
-      });
+      (async () => {
+        for(let app of apps) {
+          let doc = await db.collection('apps').doc(app).get();
+          let docData = doc.data();
+          this.appData.push({ app, ...docData });
+          console.log(this.appData);
+        }
+      })();
     }
   }
 
