@@ -1,6 +1,8 @@
 <template>
   <div>
-    <NewApp title="Add a new Property"></NewApp>
+    <div style="display:flex">
+      <NewApp title="Add a new Property" class="new-app-button"></NewApp>
+    </div>
      <div class="display-1">Properties</div>
      <v-divider></v-divider>
      <!-- <LandlordApp class="app"></LandlordApp> -->

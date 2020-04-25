@@ -73,6 +73,8 @@ export default {
          let form = { ...this.property, ...details, user }
          // Add a date when the form was created.
          form['created'] = firebase.firestore.FieldValue.serverTimestamp();
+         // Create an empty array to hold the id's of all the applicants.
+         form['applicants'] = []
          // Create a new application and then update the user.
          db.collection('apps').add(form)
             .then(res => {

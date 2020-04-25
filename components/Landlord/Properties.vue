@@ -5,12 +5,13 @@
             <tr>
                <th class="text-left">Address</th>
                <th class="text-left">Created</th>
-               <th class="text-left">Applicant Limit</th>
+               <th class="text-left">Group Limit</th>
                <th class="text-left">Options</th>
+               <th class="text-left">Current Applications</th>
             </tr>
          </thead>
-         <tbody >
-            <tr v-for="app in apps" :key="app.app">
+         <tbody>
+            <tr v-for="app in apps" :key="app.app" @click="goTo(app.app)" class="property-row">
                <td>{{app.address}}</td>
                <td>{{displayTime(app.created.seconds)}}</td>
                <td>{{app.limit}}</td>
@@ -52,6 +53,7 @@
                      <span>Credit History</span>
                   </v-tooltip>
                </td>
+               <td>25</td>
             </tr>
          </tbody>
       </template>
@@ -74,10 +76,17 @@ export default {
       displayTime(seconds) {
          return new Date(seconds * 1000).toLocaleDateString();
       },
+      goTo(appId) {
+         // Pushes the apps id. app.app is a bad name.
+         console.log(appId);
+         this.$router.push(`/apps/${appId}`);
+      }
    },
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.property-row:hover {
+   cursor: pointer;
+}
 </style>
