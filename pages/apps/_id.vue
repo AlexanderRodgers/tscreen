@@ -1,10 +1,17 @@
 <template>
-  <div>Hello</div>
+  <div>
+     <AppStats></AppStats>
+  </div>
 </template>
 
 <script>
 import { db } from '~/plugins/firebase';
+import AppStats from '~/components/stats/AppStats'
 export default {
+   components: {
+      AppStats
+   },
+
    validate({ params, store }) {
       let user = store.state.user;
       // Make sure the user has permission to view the application.
@@ -19,10 +26,11 @@ export default {
 
    mounted() {
       db.collection('apps').doc(this.$route.params.id).get()
-         .then(async (doc) => {
-            this.app = await doc.data();
+         .then((doc) => {
+            if (doc.exists) {
+               this.app = doc.data();
+            }
          });
-      console.log(this.app);
    }
 }
 </script>
