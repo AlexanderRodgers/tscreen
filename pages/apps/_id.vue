@@ -1,6 +1,7 @@
 <template>
-  <div>
-     <AppStats></AppStats>
+  <div style="display:flex">
+     <AppStats :config="applications"></AppStats>
+     <AppStats :config="creditScore"></AppStats>
   </div>
 </template>
 
@@ -20,7 +21,19 @@ export default {
 
    data() {
       return {
-         app: {}
+         app: {},
+         applications: {
+            title: 'Applications (Last 24hrs)',
+            icon: 'mdi-trending-up',
+            color: 'green',
+            value: 25
+         },
+         creditScore: {
+            title: 'Average Credit Score',
+            icon: 'mdi-counter',
+            color: 'gray',
+            value: 750
+         }
       }
    },
 
