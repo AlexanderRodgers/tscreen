@@ -1,16 +1,32 @@
 <template>
-  <div style="display:flex">
-     <AppStats :config="applications"></AppStats>
-     <AppStats :config="creditScore"></AppStats>
-  </div>
+   <div>
+      <div style="display:flex">
+         <AppStats :config="applications"></AppStats>
+         <AppStats :config="creditScore"></AppStats>
+      </div>
+      <div>
+         <v-simple-table>
+            <template v-slot:default>
+               <thead>
+                  <tr>
+                     <th>Group Info</th>
+                     <th>Application Date</th>                     
+                  </tr>
+               </thead>
+            </template>
+         </v-simple-table>
+      </div>
+   </div>
 </template>
 
 <script>
 import { db } from '~/plugins/firebase';
 import AppStats from '~/components/stats/AppStats'
+import LandlordApp from '~/components/Landlord/LandlordApp'
 export default {
    components: {
-      AppStats
+      AppStats,
+      LandlordApp
    },
 
    validate({ params, store }) {
