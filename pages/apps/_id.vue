@@ -38,6 +38,7 @@ export default {
    validate({ params, store }) {
       let user = store.state.user;
       // Make sure the user has permission to view the application.
+      // maybe don't do this.
       return user.user.apps.some(app => app === params.id);
    },
 
