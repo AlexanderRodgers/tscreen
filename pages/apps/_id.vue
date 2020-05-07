@@ -16,7 +16,7 @@
                <tbody>
                   <tr v-for="app in app.applicants" :key="app.id">
                      <td>Alex, Josh, Jakob, and 2 others</td>
-                     <td>Applied 5/1/2020</td>
+                     <td>Applied 5/6/2020</td>
                   </tr>
                </tbody>
             </template>
