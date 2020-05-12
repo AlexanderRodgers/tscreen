@@ -78,7 +78,6 @@ export default {
       },
       goTo(appId) {
          // Pushes the apps id. app.app is a bad name.
-         console.log(appId);
          this.$router.push(`/apps/${appId}`);
       }
    },
